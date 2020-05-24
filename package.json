@@ -1,0 +1,20 @@
+{
+  "name": "todoist",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "todoist",
+    "sync",
+    "api"
+  ],
+  "author": "romgrk <romgrk.cc@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^11.1.4",
+    "uuid": "^8.1.0"
+  }
+}
