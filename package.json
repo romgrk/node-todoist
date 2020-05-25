@@ -1,12 +1,18 @@
 {
   "name": "todoist",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Todoist Sync API v8",
   "homepage": "https://github.com/romgrk/node-todoist",
-  "bugs": { "url" : "https://github.com/romgrk/node-todoist/issues" },
+  "bugs": {
+    "url": "https://github.com/romgrk/node-todoist/issues"
+  },
   "author": "romgrk <romgrk.cc@gmail.com>",
   "license": "MIT",
-  "keywords": ["todoist", "sync", "api"],
+  "keywords": [
+    "todoist",
+    "sync",
+    "api"
+  ],
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
