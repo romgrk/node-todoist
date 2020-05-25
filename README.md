@@ -5,33 +5,41 @@ This module implements v8 of Todoist Sync API described [here](https://doist.git
 
 ### Usage
 
+API token available here: https://todoist.com/prefs/integrations
+
 ```javascript
 
-const Todoist = require('../')
+const Todoist = require('todoist')
 const todoist = Todoist(process.env.TODOIST_API_KEY)
 
 ;(async () => {
 
+  // READING DATA:
   // sync(): retrieves the latest data, incrementally.
   //         the first call retrieves all data, but you can ask
   //         for the specific data you want by passing
   //         eg ['projects', 'items']
   await todoist.v8.sync()
 
-  // todoist.v8.xxxxxx.get() functions are not async functions, they
-  // return the data that was already fetched by .sync()
+  // todoist.v8.xxxxxx.get() functions are not async functions,
+  //         they return the data that was already fetched by .sync()
   const items = todoist.v8.items.get()
   console.log(items.map(i => [i.id, i.content]))
 
-  // the rest of the functions require arguments, refer to the offical doc for details
+  // WRITING DATA:
+  // the rest of the functions require arguments, refer to the offical
+  // doc for details
   const newItem = await todoist.v8.items.add({ content: 'new task!' })
   console.log(newItem)
+
+  // all functions (except .get()) perform a .sync() before resolving,
+  // therefore if you call .get() again you get the most up-to-date data
+  const latestItems = todoist.v8.items.get()
+  console.log(latestItems)
 
 })()
 
 ```
-
-API token available here: https://todoist.com/prefs/integrations
 
 ### API
 
