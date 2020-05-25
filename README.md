@@ -3,9 +3,7 @@
 
 This module implements v8 of Todoist Sync API described [here](https://doist.github.io/todoist-api/sync/v8/)
 
-### Usage
-
-API token available here: https://todoist.com/prefs/integrations
+## Usage
 
 ```javascript
 
@@ -22,7 +20,7 @@ const todoist = Todoist(process.env.TODOIST_API_KEY)
   await todoist.v8.sync()
 
   // todoist.v8.xxxxxx.get() functions are not async functions,
-  //         they return the data that was already fetched by .sync()
+  // they return the data that was already fetched by .sync()
   const items = todoist.v8.items.get()
   console.log(items.map(i => [i.id, i.content]))
 
@@ -34,14 +32,14 @@ const todoist = Todoist(process.env.TODOIST_API_KEY)
 
   // all functions (except .get()) perform a .sync() before resolving,
   // therefore if you call .get() again you get the most up-to-date data
-  const latestItems = todoist.v8.items.get()
-  console.log(latestItems)
 
 })()
 
 ```
 
-### API
+API token available here: https://todoist.com/prefs/integrations
+
+## API
 
 The API is derived directly from the official documentation. It is transcribed below because
 the code is so simple to read it's better this way:
@@ -132,3 +130,18 @@ const v8 = {
 }
 
 ```
+
+### Note on performance
+
+As mentionned in the usage section, this module does `.sync()` requests for every
+command. It's convenient in that it can be the source of truth for data; otherwise
+it is left to the client to do some bookkeeping as to merge and clean items as they
+are added, updated or removed. This however slightly increases the latency because
+2 HTTP requests will be made instead of 1.
+
+This is also not using the Sync API to it's full capacity, as it is possible to issue
+multiple commands in a single request, which this module doesn't do. (eg project_add
++ item_add)
+
+For most cases, all this doesn't matter. However if it does for you please file an
+issue: https://github.com/romgrk/node-todoist/issues
