@@ -131,7 +131,7 @@ const v8 = {
 
 ```
 
-### Note on performance
+### Closing note on performance
 
 As mentionned in the usage section, this module does `.sync()` requests for every
 command. It's convenient in that it can be the source of truth for data; otherwise
@@ -140,8 +140,7 @@ are added, updated or removed. This however slightly increases the latency becau
 2 HTTP requests will be made instead of 1.
 
 This is also not using the Sync API to it's full capacity, as it is possible to issue
-multiple commands in a single request, which this module doesn't do. (eg project_add
-+ item_add)
+multiple commands in a single request, which this module doesn't do.
 
 For most cases, all this doesn't matter. However if it does for you please file an
 issue: https://github.com/romgrk/node-todoist/issues
