@@ -2,15 +2,24 @@
  * simple.js
  */
 
-const Todoist = require('../')
-const todoist = Todoist(process.env.TODOIST_API_KEY)
+const Todoist = require('../').v8
+const api = Todoist(process.env.TODOIST_API_KEY)
 
 ;(async () => {
-  await todoist.v8.sync()
 
-  const items = todoist.v8.items.get()
+  await api.sync()
+
+  const items = api.items.get()
   console.log(items.map(i => [i.id, i.content]))
 
-  const newItem = await todoist.v8.items.add({ content: 'new task!' })
+  const newItem = await api.items.add({ content: 'new task!' })
   console.log(newItem)
+
+  const res = await api.items.delete({ id: newItem.id })
+  console.log(res)
+
+  // console.log(api.state)
+  // console.log(await api.activityLog.get({ object_type: 'project' }))
+  // const interval = setInterval(() => {}, 100000)
+
 })()

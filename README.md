@@ -17,20 +17,18 @@ const todoist = Todoist(process.env.TODOIST_API_KEY)
   //         the first call retrieves all data, but you can ask
   //         for the specific data you want by passing
   //         eg ['projects', 'items']
-  await todoist.v8.sync()
+  await todoist.sync()
 
-  // todoist.v8.xxxxxx.get() functions are not async functions,
+  // todoist.xxxxxx.get() functions are not async functions,
   // they return the data that was already fetched by .sync()
-  const items = todoist.v8.items.get()
-  console.log(items.map(i => [i.id, i.content]))
+  const items = todoist.items.get()
 
   // WRITING DATA:
   // the rest of the functions require arguments, refer to the offical
   // doc for details
-  const newItem = await todoist.v8.items.add({ content: 'new task!' })
-  console.log(newItem)
+  const newItem = await todoist.items.add({ content: 'new task!' })
 
-  // all functions (except .get()) perform a .sync() before resolving,
+  // all functions (except .get()) perform a sync before resolving,
   // therefore if you call .get() again you get the most up-to-date data
 
 })()
@@ -49,7 +47,7 @@ the code is so simple to read it's better this way:
 function sync(resourceTypes) { /* ... */ }
 
 const projects = {
-  get:     () => data.projects,
+  get:     () => state.projects,
   add:     (options) => command('project', 'add', options),
   update:  (options) => command('project', 'update', options),
   move:    (options) => command('project', 'move', options),
@@ -60,24 +58,24 @@ const projects = {
 }
 
 const items = {
-  get:     () => data.items,
-  getAll:  () => client(`${BASE}/completed/get_all`, { form: { token } }),
+  get:     () => state.items,
+  getAll:  () => request(`${BASE}/completed/get_all`),
   add:     (options) => command('item', 'add', options),
   update:  (options) => command('item', 'update', options),
   move:    (options) => command('item', 'move', options),
   reorder: (options) => command('item', 'reorder', options),
   delete:  (options) => command('item', 'delete', options),
+  close:   (options) => command('item', 'close', options),
   complete:  (options) => command('item', 'complete', options),
-  uncomplete:  (options) => command('item', 'uncomplete', options),
-  archive:  (options) => command('item', 'archive', options),
+  uncomplete: (options) => command('item', 'uncomplete', options),
+  archive:    (options) => command('item', 'archive', options),
   unarchive:  (options) => command('item', 'unarchive', options),
-  updateDateCompleted:  (options) => command('item', 'update_date_complete', options),
-  close:  (options) => command('item', 'close', options),
-  updateDayOrders:  (options) => command('item', 'update_day_orders', options),
+  updateDayOrders: (options) => command('item', 'update_day_orders', options),
+  updateDateCompleted: (options) => command('item', 'update_date_complete', options),
 }
 
 const labels = {
-  get:     () => data.labels,
+  get:     () => state.labels,
   add:     (options) => command('label', 'add', options),
   update:  (options) => command('label', 'update', options),
   delete:  (options) => command('label', 'delete', options),
@@ -85,14 +83,14 @@ const labels = {
 }
 
 const notes = {
-  get:     () => data.notes,
+  get:     () => state.notes,
   add:     (options) => command('note', 'add', options),
   update:  (options) => command('note', 'update', options),
   delete:  (options) => command('note', 'delete', options),
 }
 
 const sections = {
-  get:     () => data.sections,
+  get:     () => state.sections,
   add:     (options) => command('section', 'add', options),
   update:  (options) => command('section', 'update', options),
   move:    (options) => command('section', 'move', options),
@@ -103,7 +101,7 @@ const sections = {
 }
 
 const filters = {
-  get:     () => data.filters,
+  get:     () => state.filters,
   add:     (options) => command('filter', 'add', options),
   update:  (options) => command('filter', 'update', options),
   delete:  (options) => command('filter', 'delete', options),
@@ -111,35 +109,81 @@ const filters = {
 }
 
 const reminders = {
-  get:     () => data.reminders,
+  get:     () => state.reminders,
   add:     (options) => command('reminder', 'add', options),
   update:  (options) => command('reminder', 'update', options),
   delete:  (options) => command('reminder', 'delete', options),
   clearLocations: (options) => command('reminder', 'clear_locations', options),
 }
 
-// exported API
-const v8 = {
+const user = {
+  get:     () => state.user,
+  update:  (options) => command('user', 'update', options),
+  updateGoals:  (options) => command('user', { name: 'update_goals' }, options),
+}
+
+const settings = {
+  get:     () => state.user_settings,
+  update:  (options) => command('user_settings', 'update', options),
+}
+
+const sharing = {
+  collaborators: () => state.collaborators,
+  shareProject: (options) => command('collaborator', { name: 'share_project' }, options),
+  deleteCollaborator: (options) => command('collaborator', { name: 'delete_collaborator', isDelete: true }, options),
+  acceptInvitation: (options) => command('collaborator', { name: 'accept_invitation' }, options),
+  rejectInvitation: (options) => command('collaborator', { name: 'reject_invitation' }, options),
+  deleteInvitation: (options) => command('collaborator', { name: 'delete_invitation' }, options),
+}
+
+const liveNotifications = {
+  setLastRead: (options) => command('live_notifications', 'set_last_read', options),
+  markAsRead: (options) => command('live_notifications', 'mark_read', options),
+  markAllAsRead: (options) => command('live_notifications', 'mark_read_all', options),
+  markAsUnread: (options) => command('live_notifications', 'mark_unread', options),
+}
+
+const business = {
+  // TODO: implement
+}
+
+const activityLog = {
+  get: (options) => request({ url: `${BASE}/activity/get`, query: options }),
+}
+
+const backup = {
+  // TODO: implement
+}
+
+const email = {
+  // TODO: implement
+}
+
+const api = {
   sync,
+  commit,
+  state,
   projects,
   items,
   notes,
   sections,
   filters,
   reminders,
+  user,
+  settings,
+  sharing,
+  liveNotifications,
+  business,
+  activityLog,
+  backup,
+  email,
 }
 
 ```
 
-### Closing note on performance
+### Closing note on efficiency
 
-As mentionned in the usage section, this module does `.sync()` requests for every
-command. It's convenient in that it can be the source of truth for data; otherwise
-it is left to the client to do some bookkeeping as to merge and clean items as they
-are added, updated or removed. This however slightly increases the latency because
-2 HTTP requests will be made instead of 1.
-
-This is also not using the Sync API to it's full capacity, as it is possible to issue
+This module is not using the Sync API to it's full capacity, as it is possible to issue
 multiple commands in a single request, which this module doesn't do.
 
 For most cases, all this doesn't matter. However if it does for you please file an
