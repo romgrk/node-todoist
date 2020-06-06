@@ -177,6 +177,7 @@ const api = {
   activityLog,
   backup,
   email,
+  colorsById: COLORS_BY_ID,
 }
 
 ```
