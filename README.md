@@ -183,8 +183,8 @@ const api = {
 
 ### Closing note on efficiency
 
-This module is not using the Sync API to it's full capacity, as it is possible to issue
-multiple commands in a single request, which this module doesn't do.
+This module is not using the Sync API to it's full capacity. It is possible to issue
+multiple commands in a single request, but this module doesn't.
 
-For most cases, all this doesn't matter. However if it does for you please file an
+For most cases, it doesn't matter. However if it does for you please file an
 issue: https://github.com/romgrk/node-todoist/issues
