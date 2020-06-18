@@ -70,7 +70,7 @@ const defaultOptions = {
  */
 function Todoist(token, userOptions = defaultOptions) {
   if (!/^[0-9A-Fa-f]{40}$/.test(token))
-      throw new Error(`Invalid API token. A token should be 40 characters long and exist of hexadecimals, was ${apiKey} (${apiKey.length} characters)`);
+      throw new Error(`Invalid API token. A token should be 40 characters long and exist of hexadecimals, was ${token} (${token.length} characters)`);
 
   const options = Object.assign({}, defaultOptions, userOptions)
   const client = got.extend({ method: 'POST', responseType: 'json' })
