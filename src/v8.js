@@ -308,6 +308,7 @@ function Todoist(token, userOptions = defaultOptions) {
     state,
     projects,
     items,
+    labels,
     notes,
     sections,
     filters,
