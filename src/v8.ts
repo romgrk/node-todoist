@@ -293,6 +293,13 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     delete: createCommand<Types.NoteDelete>('note', 'delete'),
   }
 
+  const projectNotes = {
+    get: () => state.project_notes,
+    add: createCommand<Types.ProjectNoteAdd>('note', 'add'),
+    update: createCommand<Types.ProjectNoteUpdate>('note', 'update'),
+    delete: createCommand<Types.ProjectNoteDelete>('note', 'delete'),
+  }
+
   const sections = {
     get: () => state.sections,
     add: createCommand<Types.SectionAdd>('section', 'add'),
@@ -376,6 +383,7 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     liveNotifications,
     notes,
     projects,
+    projectNotes,
     reminders,
     sections,
     settings,
