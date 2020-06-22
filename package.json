@@ -6,19 +6,56 @@
   "bugs": {
     "url": "https://github.com/romgrk/node-todoist/issues"
   },
-  "author": "romgrk <romgrk.cc@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "todoist",
-    "sync",
-    "api"
+  "contributors": [
+    {
+      "name": "romgrk",
+      "email": "romgrk.cc@gmail.com",
+      "url": "https://github.com/romgrk"
+    },
+    {
+      "name": "Tobias Kopelke",
+      "email": "nox@raynode.de",
+      "url": "https://github.com/lordnox"
+    }
   ],
-  "main": "src/index.js",
+  "license": "MIT",
+  "module": "dist/index.es.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "watch": "rollup -cw",
+    "test": "jest --bail",
+    "test:watch": "jest --bail --watch",
+    "test:coverage": "jest --coverage --watchAll=false"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
-    "got": "^11.1.4",
+    "got": "^11.3.0",
     "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.11",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.8",
+    "@types/uuid": "^8.0.0",
+    "faker": "^4.1.0",
+    "jest": "^25.2.4",
+    "nodemon": "^2.0.4",
+    "rollup": "^2.3.2",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "ts-jest": "^25.3.0",
+    "typescript": "^3.8.3"
   }
 }
