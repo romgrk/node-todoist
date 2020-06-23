@@ -393,7 +393,7 @@ export interface ProjectNoteAdd {
 
 export interface ProjectNoteUpdate {
   /** The project which the note is part of. */
-  project_id: Id
+  id: Id
   /** The content of the note. */
   content: string
   /** A file attached to the note (see more details about attachments above, and learn how to upload a file in the Uploads section). */
@@ -402,7 +402,7 @@ export interface ProjectNoteUpdate {
 
 export interface ProjectNoteDelete {
   /** The id of the note. */
-  project_id: Id
+  id: Id
 }
 
 export interface Note extends NodeType {
