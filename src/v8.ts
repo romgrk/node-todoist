@@ -40,6 +40,7 @@ interface TodoistResources {
   live_notifications: Types.LiveNotifications[]
   note: Types.Note[]
   project: Types.Project[]
+  project_note: Types.ProjectNote[]
   reminder: Types.Reminder[]
   section: Types.Section[]
   user: Types.User
@@ -295,9 +296,9 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
 
   const projectNotes = {
     get: () => state.project_notes,
-    add: createCommand<Types.ProjectNoteAdd>('note', 'add'),
-    update: createCommand<Types.ProjectNoteUpdate>('note', 'update'),
-    delete: createCommand<Types.ProjectNoteDelete>('note', 'delete'),
+    add: createCommand<Types.ProjectNoteAdd>('project_note', 'add'),
+    update: createCommand<Types.ProjectNoteUpdate>('project_note', 'update'),
+    delete: createCommand<Types.ProjectNoteDelete>('project_note', 'delete'),
   }
 
   const sections = {
