@@ -359,6 +359,52 @@ export interface LabelDelete {
 
 export interface LabelUpdateOrders {}
 
+export interface ProjectNote extends NodeType {
+  /** The id of the note. */
+  id: number
+  /** The id of the user that posted the note. */
+  posted_uid: number
+  /** The project which the note is part of. */
+  project_id: number
+  /** The content of the note. */
+  content: string
+  /** A file attached to the note (see more details about attachments later on). */
+  file_attachment: FileUpload
+  /** A list of user ids to notify. */
+  uids_to_notify: number[]
+  /** Whether the note is marked as deleted (where 1 is true and 0 is false). */
+  is_deleted: Boolean
+  /** The date when the note was posted. */
+  posted: string
+  /** List of emoji reactions and corresponding user ids.
+   * {"❤️": [14781321], "👍": [14781321, 12213313]}
+   */
+  reactions: Record<string, number[]>
+}
+
+export interface ProjectNoteAdd {
+  /** The project which the note is part of. */
+  project_id: Id
+  /** The content of the note. */
+  content: string
+  /** A file attached to the note (see more details about attachments above, and learn how to upload a file in the Uploads section). */
+  file_attachment?: FileUpload
+}
+
+export interface ProjectNoteUpdate {
+  /** The project which the note is part of. */
+  project_id: Id
+  /** The content of the note. */
+  content: string
+  /** A file attached to the note (see more details about attachments above, and learn how to upload a file in the Uploads section). */
+  file_attachment?: FileUpload
+}
+
+export interface ProjectNoteDelete {
+  /** The id of the note. */
+  project_id: Id
+}
+
 export interface Note extends NodeType {
   /** The id of the note. */
   id: number
@@ -389,29 +435,6 @@ export interface Note extends NodeType {
   posted: string
   /** List of emoji reactions and corresponding user ids. */
   reactions: object
-}
-
-export interface ProjectNoteAdd {
-  /** The project which the note is part of. */
-  project_id: Id
-  /** The content of the note. */
-  content: string
-  /** A file attached to the note (see more details about attachments above, and learn how to upload a file in the Uploads section). */
-  file_attachment?: FileUpload
-}
-
-export interface ProjectNoteUpdate {
-  /** The project which the note is part of. */
-  project_id: Id
-  /** The content of the note. */
-  content: string
-  /** A file attached to the note (see more details about attachments above, and learn how to upload a file in the Uploads section). */
-  file_attachment?: FileUpload
-}
-
-export interface ProjectNoteDelete {
-  /** The id of the note. */
-  project_id: Id
 }
 
 export interface NoteAdd {

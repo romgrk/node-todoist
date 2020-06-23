@@ -21,7 +21,7 @@ export interface State {
   live_notifications: Types.LiveNotifications[]
   locations: Types.NodeType[]
   notes: Types.Note[]
-  project_notes: Types.NodeType[]
+  project_notes: Types.ProjectNote[]
   projects: Types.Project[]
   reminders: Types.Reminder[]
   sections: Types.Section[]
