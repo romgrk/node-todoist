@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "ES2015",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5",
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.tsx", "**/*.test.ts", "node_modules", "dist"]
+}
