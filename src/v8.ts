@@ -397,4 +397,7 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
   return api
 }
 
+Todoist.colorsById = COLORS_BY_ID
+Todoist.getColor = (id: Types.ColorId) => COLORS_BY_ID[id]
+
 export default Todoist

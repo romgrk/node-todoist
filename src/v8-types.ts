@@ -231,7 +231,7 @@ export interface Project extends NodeType {
   /** The name of the project. */
   name: string
   /** Color id. It’s a value between 30 and 49, refer to Colors for more info. */
-  color: number
+  color: ColorId
   /** The id of the parent project. Set to null for root projects. */
   parent_id: number
   /** The legacy id of the parent project. Set to null for root projects. */
@@ -319,7 +319,7 @@ export interface Label extends NodeType {
   /** The name of the label. */
   name: string
   /** Color id. It’s a value between 30 and 49, refer to Colors for more info. */
-  color: number
+  color: ColorId
   /** Label’s order in the label list (a number, where the smallest value should place the label at the top). */
   item_order: number
   /** Whether the label is marked as deleted (where 1 is true and 0 is false). */
