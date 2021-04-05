@@ -371,6 +371,11 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     // TODO: implement
   }
 
+  const syncToken_ = {
+    get: () => syncToken,
+    set: (newToken: string) => { syncToken = newToken },
+  }
+
   const api = {
     activityLog,
     backup,
@@ -392,6 +397,7 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     state,
     sync,
     user,
+    syncToken: syncToken_,
   }
 
   return api
