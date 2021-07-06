@@ -50,6 +50,8 @@
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.8",
     "@types/uuid": "^8.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "faker": "^4.1.0",
     "jest": "^25.2.4",
     "nodemon": "^2.0.4",

@@ -232,8 +232,10 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     >
     return state[stateKey].find((item) => item.id === newId)
   }
-  const createCommand = <Args>(type: keyof TodoistResources, action: string) => async (args: Args) =>
-    executeCommand(type, action, args)
+  const createCommand =
+    <Args>(type: keyof TodoistResources, action: string) =>
+    async (args: Args) =>
+      executeCommand(type, action, args)
 
   const sync = async (resourceTypes = options.resourceTypes) => {
     const res = await request(
@@ -373,7 +375,9 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
 
   const syncToken_ = {
     get: () => syncToken,
-    set: (newToken: string) => { syncToken = newToken },
+    set: (newToken: string) => {
+      syncToken = newToken
+    },
   }
 
   const api = {
