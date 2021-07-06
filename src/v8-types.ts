@@ -20,6 +20,17 @@ export interface DueDate {
   is_recurring: boolean
 }
 
+export interface DueDateInputString {
+  string: string
+  timezone?: string
+}
+
+export interface DueDateInputDate {
+  date: string
+}
+
+export type DueDateInput = DueDateInputString | DueDateInputDate
+
 export type Boolean = 0 | 1
 
 export type Priority = 1 | 2 | 3 | 4
@@ -110,7 +121,7 @@ export interface ItemAdd {
   /** The id of the project to add the task to (a number or a temp id). By default the task is added to the user’s Inbox project. */
   project_id?: Id
   /** The due date of the task. See the Due dates section for more details. */
-  due?: DueDate
+  due?: DueDateInput
   /** The priority of the task (a number between 1 and 4, 4 for very urgent and 1 for natural). */
   /** Note: Keep in mind that very urgent is the priority 1 on clients. So, p1 will return 4 in the API. */
   priority?: Priority
