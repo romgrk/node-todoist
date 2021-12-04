@@ -54,6 +54,7 @@
     "dotenv": "^10.0.0",
     "faker": "^4.1.0",
     "jest": "^25.2.4",
+    "nock": "^13.2.1",
     "nodemon": "^2.0.4",
     "rollup": "^2.3.2",
     "rollup-plugin-typescript2": "^0.27.0",

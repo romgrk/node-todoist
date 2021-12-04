@@ -1,11 +1,16 @@
-import { v8 as Todoist } from './index'
 import { config } from 'dotenv'
-import { NodeType } from './v8-types'
 import path from 'path'
+import { createTodoistResponse, nock, respondToSync } from './fixtures/requests'
+import { SectionUpdate, v8 as Todoist } from './index'
+import { NodeType } from './v8-types'
+
 config({ path: path.basename(__dirname + '/.env') })
 
 type ApiType = ReturnType<typeof Todoist>
 let api: ApiType
+
+const TODOIST_API_KEY = '1234567890abcdef1234567890abcdef12345678' // 40 char string
+const SYNC_TOKEN = 'SYNC_TOKEN'
 
 describe('initialization', () => {
   it('fails with invalid api key', () => {
@@ -15,10 +20,12 @@ describe('initialization', () => {
   })
 
   it('works', () => {
-    api = Todoist(process.env.TODOIST_API_KEY as string)
+    api = Todoist(TODOIST_API_KEY)
   })
 
-  test('.sync() properly', async () => {
+  it('.sync() properly', async () => {
+    nock.post('/sync/v8/sync').reply(200, createTodoistResponse({ sync_token: SYNC_TOKEN }))
+
     await api.sync()
   })
 })
@@ -26,18 +33,31 @@ describe('initialization', () => {
 describe('.items CRUD', () => {
   let newItem: NodeType | undefined
 
-  test('.get() returns data', () => {
+  it('.get() returns data', () => {
     const items = api.items.get()
     expect(items).toBeInstanceOf(Array)
   })
 
-  test('.add() works', async () => {
+  it('.add() works', async () => {
+    respondToSync((commands, id) => ({
+      items: [
+        {
+          id,
+          ...commands.args,
+        },
+      ],
+    }))
     newItem = await api.items.add({ content: 'testing-task' })
     expect(newItem).toMatchObject({ content: 'testing-task' })
   })
 
-  test('.delete() works', async () => {
+  it('.delete() works', async () => {
     if (!newItem) return
+    respondToSync((commands) => {
+      expect(commands.type).toBe('item_delete')
+      expect(commands.args).toMatchObject({ id: newItem!.id })
+      return {}
+    })
     await api.items.delete({ id: newItem.id })
     const deletedItem = api.items.get().find((item) => item.id === newItem?.id)
     expect(deletedItem).toBeUndefined()
@@ -45,16 +65,27 @@ describe('.items CRUD', () => {
 })
 
 describe('.items due dates', () => {
-  let item: NodeType | undefined
+  it('.add() with string due date', async () => {
+    respondToSync((commands, id) => {
+      return {
+        items: [
+          {
+            id,
+            ...commands.args,
+            // this is a example of how the todoist api parses the { string: '17th of july 2021' } date
+            due: {
+              date: '2021-07-17',
+              is_recurring: false,
+              lang: 'en',
+              string: '17th of july 2021',
+              timezone: null,
+            },
+          },
+        ],
+      }
+    })
 
-  afterEach(async () => {
-    if (item) {
-      await api.items.delete({ id: item.id })
-    }
-  })
-
-  test('.add() with string due date', async () => {
-    item = await api.items.add({ content: 'testing-task', due: { string: '17th of july 2021' } })
+    const item = await api.items.add({ content: 'testing-task', due: { string: '17th of july 2021' } })
     expect(item).toMatchObject({
       content: 'testing-task',
       due: {
@@ -67,12 +98,30 @@ describe('.items due dates', () => {
     })
   })
 
-  test('.add() with due date', async () => {
-    item = await api.items.add({
+  it('.add() with due date', async () => {
+    respondToSync((commands, id) => {
+      return {
+        items: [
+          {
+            id,
+            ...commands.args,
+            // this is a example of how the todoist api parses the { string: '17th of july 2021' } date
+            due: {
+              date: '2018-10-14',
+              is_recurring: false,
+              lang: 'en',
+              string: '2018-10-14',
+              timezone: null,
+            },
+          },
+        ],
+      }
+    })
+    const item = await api.items.add({
       content: 'testing-task',
       due: { date: '2018-10-14' },
     })
-    console.log(item)
+
     expect(item).toMatchObject({
       content: 'testing-task',
       due: {
@@ -82,6 +131,24 @@ describe('.items due dates', () => {
         string: '2018-10-14',
         timezone: null,
       },
+    })
+  })
+})
+
+describe('issue-26', () => {
+  beforeEach(() => {
+    api = Todoist(TODOIST_API_KEY)
+  })
+
+  describe('SectionUpdate', () => {
+    it('should allow sections to be updated', async () => {
+      const fn = async (section: SectionUpdate) => {}
+
+      // this is expected to work with typescript
+      fn({
+        id: 1,
+        name: 'test',
+      })
     })
   })
 })

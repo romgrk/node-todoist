@@ -509,8 +509,10 @@ export interface SectionAdd {
 }
 
 export interface SectionUpdate {
+  /** The ID of the section */
+  id: Id
   /** The name of the section. */
-  name: String
+  name?: String
   /** Whether the section’s tasks are collapsed (where 1 is true and 0 is false). */
   collapsed?: Boolean
 }
