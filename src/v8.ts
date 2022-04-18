@@ -365,6 +365,15 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     get: (options: any) => request({ url: `${options.endpoint}/activity/get`, query: options }),
   }
 
+  const completedItems = {
+    get: async (opts: any) => {
+      const res = await request({
+        url: `${options.endpoint}/completed/get_all`, query: opts
+      })
+      return res.items
+    }
+  }
+
   const backup = {
     // TODO: implement
   }
@@ -382,6 +391,7 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
 
   const api = {
     activityLog,
+    completedItems,
     backup,
     business,
     colorsById: COLORS_BY_ID,

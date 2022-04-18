@@ -44,6 +44,13 @@ describe('.items CRUD', () => {
   })
 })
 
+describe('completedItems', () => {
+  test('.get() returns data', async () => {
+    const log = await api.completedItems.get({});
+    expect(log).toBeInstanceOf(Array)
+  })
+})
+
 describe('.items due dates', () => {
   let item: NodeType | undefined
 
