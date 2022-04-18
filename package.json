@@ -27,7 +27,8 @@
     "watch": "rollup -cw",
     "test": "jest --bail",
     "test:watch": "jest --bail --watch",
-    "test:coverage": "jest --coverage --watchAll=false"
+    "test:coverage": "jest --coverage --watchAll=false",
+    "postinstall": "npm run build"
   },
   "browserslist": {
     "production": [
