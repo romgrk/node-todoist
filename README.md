@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/todoist.svg)](https://badge.fury.io/js/todoist)
 
-This module implements v8 of Todoist Sync API described [here](https://doist.github.io/todoist-api/sync/v8/)
+This module implements v8 of Todoist Sync API described [here](https://developer.todoist.com/sync/v8/)
 
 ## Installation
 
