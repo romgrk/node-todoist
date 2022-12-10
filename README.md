@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/todoist.svg)](https://badge.fury.io/js/todoist)
 
-This module implements v8 of Todoist Sync API described [here](https://developer.todoist.com/sync/v8/)
+This module implements v9 of Todoist Sync API described [here](https://developer.todoist.com/sync/v9/)
 
 ## Installation
 
@@ -19,7 +19,7 @@ yarn add todoist
 ## Usage
 
 ```javascript
-const Todoist = require('todoist').v8
+const Todoist = require('todoist').v9
 const todoist = Todoist(process.env.TODOIST_API_KEY)
 
 ;(async () => {

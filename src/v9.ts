@@ -4,7 +4,7 @@
 
 import got from 'got'
 import { v4 as uuid } from 'uuid'
-import * as Types from './v8-types'
+import * as Types from './v9-types'
 
 export interface State {
   collaborator_states: Types.NodeType[]
@@ -56,7 +56,7 @@ type TodoistResponse = {
 
 const { stringify } = JSON
 
-const BASE = 'https://api.todoist.com/sync/v8'
+const BASE = 'https://api.todoist.com/sync/v9'
 
 const COLORS_BY_ID: Record<Types.ColorId, string> = {
   30: '#b8256f',
