@@ -1,6 +1,6 @@
 {
   "name": "todoist",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Todoist Sync API v9",
   "homepage": "https://github.com/romgrk/node-todoist",
   "bugs": {
