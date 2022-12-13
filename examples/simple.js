@@ -2,7 +2,7 @@
  * simple.js
  */
 
-const Todoist = require('../').v8
+const Todoist = require('../').v9
 const api = Todoist(process.env.TODOIST_API_KEY)
 
 ;(async () => {

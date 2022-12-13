@@ -4,7 +4,7 @@
 
 import got from 'got'
 import { v4 as uuid } from 'uuid'
-import * as Types from './v8-types'
+import * as Types from './v9-types'
 
 export interface State {
   collaborator_states: Types.NodeType[]
@@ -49,36 +49,36 @@ interface TodoistResources {
 
 type TodoistResponse = {
   sync_status: Record<string, string & { error_tag: string; error: string }>
-  temp_id_mapping: Record<string, number>
+  temp_id_mapping: Record<string, string>
   sync_token: string
   full_sync: boolean
 } & State
 
 const { stringify } = JSON
 
-const BASE = 'https://api.todoist.com/sync/v8'
+const BASE = 'https://api.todoist.com/sync/v9'
 
 const COLORS_BY_ID: Record<Types.ColorId, string> = {
-  30: '#b8256f',
-  31: '#db4035',
-  32: '#ff9933',
-  33: '#fad000',
-  34: '#afb83b',
-  35: '#7ecc49',
-  36: '#299438',
-  37: '#6accbc',
-  38: '#158fad',
-  39: '#14aaf5',
-  40: '#96c3eb',
-  41: '#4073ff',
-  42: '#884dff',
-  43: '#af38eb',
-  44: '#eb96eb',
-  45: '#e05194',
-  46: '#ff8d85',
-  47: '#808080',
-  48: '#b8b8b8',
-  49: '#ccac93',
+  'berry_red': '#b8256f',
+  'red': '#db4035',
+  'orange': '#ff9933',
+  'yellow': '#fad000',
+  'olive_green': '#afb83b',
+  'lime_green': '#7ecc49',
+  'green': '#299438',
+  'mint_green': '#6accbc',
+  'teal': '#158fad',
+  'sky_blue': '#14aaf5',
+  'light_blue': '#96c3eb',
+  'blue': '#4073ff',
+  'grape': '#884dff',
+  'violet': '#af38eb',
+  'lavender': '#eb96eb',
+  'magenta': '#e05194',
+  'salmon': '#ff8d85',
+  'charcoal': '#808080',
+  'grey': '#b8b8b8',
+  'taupe': '#ccac93',
 }
 
 export type UpdateableProperties =
@@ -286,6 +286,8 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     add: createCommand<Types.LabelAdd>('label', 'add'),
     update: createCommand<Types.LabelUpdate>('label', 'update'),
     delete: createCommand<Types.LabelDelete>('label', 'delete'),
+    deleteOccurrences: createCommand<Types.LabelDeleteOccurrences>('label', 'deleteOccurrences'),
+    rename: createCommand<Types.LabelRename>('label', 'rename'),
     updateOrders: createCommand<Types.LabelUpdateOrders>('label', 'update_orders'),
   }
 
