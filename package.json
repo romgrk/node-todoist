@@ -1,7 +1,7 @@
 {
   "name": "todoist",
   "version": "1.0.0",
-  "description": "Todoist Sync API v9",
+  "description": "Todoist Sync API",
   "homepage": "https://github.com/romgrk/node-todoist",
   "bugs": {
     "url": "https://github.com/romgrk/node-todoist/issues"
@@ -23,8 +23,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -cw",
+    "prepare": "npm run build",
+    "build": "tsc",
+    "watch": "tsc --watch",
     "test": "jest --bail",
     "test:watch": "jest --bail --watch",
     "test:coverage": "jest --coverage --watchAll=false"
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@types/faker": "^4.1.11",
+    "@types/got": "^9.6.12",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.8",
     "@types/uuid": "^8.0.0",
@@ -55,9 +57,8 @@
     "faker": "^4.1.0",
     "jest": "^25.2.4",
     "nodemon": "^2.0.4",
-    "rollup": "^2.3.2",
-    "rollup-plugin-typescript2": "^0.27.0",
     "ts-jest": "^25.3.0",
-    "typescript": "^3.8.3"
+    "tslib": "^2.4.1",
+    "typescript": "^3.9.10"
   }
 }
