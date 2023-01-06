@@ -127,7 +127,11 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
     )
 
   const options = Object.assign({}, defaultOptions, userOptions)
-  const client = got.extend({ method: 'POST', responseType: 'json' })
+  const client = got.extend({
+    method: 'POST',
+    responseType: 'json',
+    headers: { Authorization: `Bearer ${token}` },
+  })
 
   const endpoint = `${options.endpoint}/sync`
 
@@ -185,8 +189,7 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
 
   const request = async (url: { url: string; query?: URLSearchParams }, data: Record<string, string> = {}) => {
     let realUrl = typeof url === 'object' ? url.url : url
-    let options =
-      typeof url === 'object' ? { searchParams: url.query, form: { token, ...data } } : { form: { token, ...data } }
+    let options = typeof url === 'object' ? { searchParams: url.query, form: data } : { form: data }
     const res = await client<TodoistResponse>(realUrl, options)
     return res.body
   }
