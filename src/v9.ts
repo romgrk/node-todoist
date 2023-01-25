@@ -173,6 +173,10 @@ export const Todoist = (token: string, userOptions = defaultOptions) => {
 
     const updateItem = <Key extends UpdateableProperties>(key: Key) => {
       const items = state[key]
+      // in case partial sync
+      if(!patch[key]){
+        return
+      }
       const newItems: Types.NodeType[] = patch[key]
       const newItemIds = newItems.map((item) => item.id)
       const updatedItems = items
