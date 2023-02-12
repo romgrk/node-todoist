@@ -43,7 +43,7 @@
     ]
   },
   "dependencies": {
-    "got": "^11.3.0",
+    "got": "^12.5.3",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
